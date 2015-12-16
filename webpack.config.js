@@ -1,12 +1,9 @@
 import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 module.exports = {
     entry: [
-        // 'webpack-dev-server/client?http://localhost:8080',
-        // 'webpack/hot/only-dev-server',
-        'webpack-hot-middleware/client?reload=true',
-        './src/index.jsx'
+        'webpack-hot-middleware/client',
+        './client/index.jsx'
     ],
     module: {
         loaders: [{
@@ -19,23 +16,20 @@ module.exports = {
         extensions: ['', '.js', '.jsx'],
     },
     output: {
-        path: __dirname + '/dist',
-        publicPath: '/',
-        filename: 'bundle.js'
+        path: path.join(__dirname, 'dist'),
+        filename: 'bundle.js',
+        publicPath: '/'
     },
     devServer: {
         contentBase: './dist',
         hot: true
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            template: 'dist/index.tpl.html',
-            inject: 'body',
-            filename: 'index.html'
-        }),
-        new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('development')
-        })
+        }),
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin()
     ],
 };
