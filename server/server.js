@@ -4,7 +4,12 @@ import express from 'express';
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
-import config from './webpack.config.js';
+import React from 'react';
+import {renderToString} from 'react-dom/server';
+import {match, RoutingContext} from 'react-router';
+import routes from '../common/routes';
+
+import config from '../webpack.config.js';
 
 
 const port = process.env.PORT || 3000;
@@ -44,7 +49,7 @@ app.get('*', (req, res) => {
             // we matched a react component
             const componentMarkup = renderToString(<RoutingContext {...props} />);
 
-            renderFullPage(componentMarkup, {});
+            res.end(renderFullPage(componentMarkup, {}));
         }
     });
 });
@@ -64,7 +69,7 @@ function renderFullPage(html, initialState) {
     <script>
       window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
     </script>
-    <script src="/static/bundle.js"></script>
+    <script src="/bundle.js"></script>
   </body>
 </html>
 `

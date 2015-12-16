@@ -1,5 +1,5 @@
-node_modules
-/npm-debug.log
+node_modules/
+npm-debug.log
 
 
 .vs/
@@ -8,4 +8,4 @@ packages/
 typings/
 
 
-dist/content/
+dist/

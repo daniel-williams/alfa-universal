@@ -1,9 +1,10 @@
-import webpack from 'webpack';
+var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
     entry: [
         'webpack-hot-middleware/client',
-        './client/index.jsx'
+        './client/index.js'
     ],
     module: {
         loaders: [{
@@ -20,10 +21,10 @@ module.exports = {
         filename: 'bundle.js',
         publicPath: '/'
     },
-    devServer: {
-        contentBase: './dist',
-        hot: true
-    },
+    // devServer: {
+    //     contentBase: './dist',
+    //     hot: true
+    // },
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('development')
